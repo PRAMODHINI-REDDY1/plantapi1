@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.os.Handler;
 
+import java.util.concurrent.ExecutionException;
+
 public class MainActivity extends AppCompatActivity {
      ImageView img;
      TextView txt;
@@ -24,11 +26,17 @@ public class MainActivity extends AppCompatActivity {
         txt=findViewById(R.id.txt);
 
 
-        Httphandler hp = new Httphandler();
+        String json = null;
+        try {
+            json = new Asycdata().execute(link).get();
+            System.out.println("Main Activity :"+json);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-        String json = hp.makeService(link);
 
-        System.out.println("Main Activity :"+json);
 
         /*ObjectAnimator animator = ObjectAnimator.ofFloat(img,"rotationY",0.0f,360.0f);
         animator.setDuration(3000);
